@@ -15,8 +15,6 @@ namespace Pures.System
 
         void IncreaseDecrease(in int value);
 
-        void Save();
-
-        void Load();
+        void SetValue(in int value);
     }
 }

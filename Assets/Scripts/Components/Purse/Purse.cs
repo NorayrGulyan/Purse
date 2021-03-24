@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using SaveLoad.System;
-using Data.System;
 
 namespace Pures.System
 {
     internal class Purse : PurseData, IPures
     {
-
-        ISaveLoad saveLoad;
-
-        IDataSystem data;
 
         public new string Name { get => base.Name; }
 
@@ -27,34 +21,12 @@ namespace Pures.System
         /// </summary>
         /// <param name="name">Name</param>
         /// <param name="key">Key</param>
-        /// <param name="data">Data</param>
-        /// <param name="saveLoad">ISaveLoad</param>
         /// <param name="value"> Value</param>
-        internal Purse(in string name,in string key,in ISaveLoad saveLoad,in IDataSystem data,in int value = 0)
+        internal Purse(in string name,in string key,in int value = 0)
         {
-            this.saveLoad = saveLoad;
-
-            this.data = data;
-
-            string valueLoad = default;
-
-            if (Load(key, out valueLoad))
-            {
-                base.Name = name;
-                base.Key = key;
-                int outValue;
-
-                if (ParseToInt(valueLoad, out outValue))
-                {
-                    base.Value = outValue;
-                }
-            }
-            else
-            {
-                base.Name = name;
-                base.Key = key;
-                base.Value = value;
-            }
+            base.Name = name;
+            base.Key = key;
+            base.Value = value;
         }
 
         public void Nullify()
@@ -67,52 +39,10 @@ namespace Pures.System
             base.Value += value;
         }
 
-        public void Save()
+        public void SetValue(in int value)
         {
-            saveLoad.Save.Save(Key, data.Data_.SetFormat(Value.ToString()));
-        }
 
-        public void Load()
-        {
-            string value;
-
-            bool staus = saveLoad.Load.Load(Key, out value);
-
-            value = data.Data_.GetFormat(value);
-
-            int valueInt;
-
-            ParseToInt(value, out valueInt);
-
-            base.Value = valueInt;
-        }
-
-        private bool Load(in string key, out string value)
-        {
-            bool staus = saveLoad.Load.Load(key, out value);
-
-            value = data.Data_.GetFormat(value);
-
-            return staus;
-        }
-
-        private bool ParseToInt(in string valueIn, out int outValue)
-        {
-            try
-            {
-                outValue = int.Parse(valueIn);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-
-                Debug.LogWarning($"{ex.Message} |");
-
-                outValue = default;
-
-                return false;
-            }
+            base.Value = value;
         }
 
     }

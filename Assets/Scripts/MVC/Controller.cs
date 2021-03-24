@@ -9,9 +9,9 @@ namespace MVC
         [SerializeField]
         Mediator mediator;
 
-        public void Nullify(int index) => mediator.Model.Purses[index].Nullify();
+        public void Nullify(int index) => mediator.Model.Purses[index].GetPures.Nullify();
 
-        public void IncreaseDecrease(int index, int value) => mediator.Model.Purses[index].IncreaseDecrease(value);
+        public void IncreaseDecrease(int index, int value) => mediator.Model.Purses[index].GetPures.IncreaseDecrease(value);
 
         public void Save(int index) => mediator.Model.Purses[index].Save();
 
