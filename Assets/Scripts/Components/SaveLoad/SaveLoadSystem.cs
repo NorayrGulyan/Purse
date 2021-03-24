@@ -9,7 +9,7 @@ namespace SaveLoad.System
         Xml
     }
 
-    public class SaveLoadSystem : ISaveLoad
+    public sealed class SaveLoadSystem : ISaveLoad
     {
         public ISave Save { get; private set; }
         public ILoad Load { get; private set; }

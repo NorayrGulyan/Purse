@@ -11,22 +11,26 @@ namespace Data.System
         Binary
     }
 
-    public class DataSystem : IDataSystem
+    public sealed class DataSystem : IData
     {
-        public IData Data_ { get; private set; }
+        IData data;
 
         public DataSystem(DataMode data)
         {
             switch (data)
             {
                 case DataMode.String:
-                    Data_ = new StringData();
+                    this.data = new StringData();
                     break;
 
                 case DataMode.Binary:
                     throw new NotImplementedException();
             }
         }
+
+        public string GetFormat(string value) => data.GetFormat(value);
+
+        public string SetFormat(string value) => data.SetFormat(value);
     }
 }
 

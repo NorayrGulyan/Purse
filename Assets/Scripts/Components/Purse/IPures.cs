@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace Pures.System
 {
     public interface IPures
@@ -9,7 +10,11 @@ namespace Pures.System
 
         string Key { get; }
 
-        IPuresData PuresData { get; }
+        Action<string> ChangeName { get; set; }
+
+        Action<string> ChangeKey { get; set; }
+
+        Action<int> ChangeValue { get; set; }
 
         void Nullify();
 

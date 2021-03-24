@@ -12,7 +12,9 @@ namespace MVC
         Mediator mediator;
 
         ISaveLoad saveLoadSystem;
-        IDataSystem data;
+        IData data;
+
+        CompositeFactory compositeFactory;
 
         public List<IComposite> Purses { get; private set; } = new List<IComposite>();
 
@@ -22,13 +24,15 @@ namespace MVC
 
             data = new DataSystem(DataMode.String);
 
+            compositeFactory = new CompositeFactory(saveLoadSystem, data);
+
             CreatePurse();
         }
 
         private void CreatePurse()
         {
-            Purses.Add(new Composite(saveLoadSystem, data, "coins", "coins", 100));
-            Purses.Add(new Composite(saveLoadSystem, data, "crystals", "crystals", 10));
+            Purses.Add(compositeFactory.NewComposite("coins", "coins", 100));
+            Purses.Add(compositeFactory.NewComposite("crystals", "crystals", 10));
         }
     }
 }

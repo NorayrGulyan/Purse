@@ -2,10 +2,8 @@
 
 namespace composite
 {
-    public interface IComposite
+    public interface IComposite : IPures
     {
-        IPures GetPures { get; }
-
         void Save();
 
         bool Load();

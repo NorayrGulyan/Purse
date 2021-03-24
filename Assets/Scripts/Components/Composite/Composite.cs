@@ -8,17 +8,27 @@ using System;
 
 namespace composite 
 {
-    public class Composite : IComposite
+    public sealed class Composite : IComposite
     {
         ISaveLoad saveLoad;
-        IDataSystem data;
+        IData data;
         IPures pures;
 
         int valueFinal;
 
-        public IPures GetPures => pures;
+        public string Name => pures.Name;
 
-        public Composite(ISaveLoad saveLoad, IDataSystem data, in string name, in string key, in int value = 0)
+        public int Value => pures.Value;
+
+        public string Key => pures.Key;
+
+        public Action<string> ChangeName { get => pures.ChangeName; set => pures.ChangeName = value; }
+
+        public Action<string> ChangeKey { get => pures.ChangeKey; set => pures.ChangeKey = value ; }
+
+        public Action<int> ChangeValue { get => pures.ChangeValue; set => pures.ChangeValue = value; }
+
+        public Composite(ISaveLoad saveLoad, IData data, in string name, in string key, in int value = 0)
         {
             this.saveLoad = saveLoad;
             this.data = data;
@@ -43,7 +53,7 @@ namespace composite
 
         public void Save()
         {
-            saveLoad.Save.Save(pures.Key, data.Data_.SetFormat(pures.Value.ToString()));
+            saveLoad.Save.Save(pures.Key, data.SetFormat(pures.Value.ToString()));
         }
 
         public bool Load()
@@ -54,7 +64,7 @@ namespace composite
 
             if (staus)
             {
-                value = data.Data_.GetFormat(value);
+                value = data.GetFormat(value);
 
                 int valueInt;
 
@@ -66,13 +76,19 @@ namespace composite
             return staus;
         }
 
+        public void Nullify() => pures.Nullify();
+
+        public void IncreaseDecrease(in int value) => pures.IncreaseDecrease(value);
+
+        public void SetValue(in int value) => pures.SetValue(value);
+
         private bool Load(in string key, out string value)
         {
             bool staus = saveLoad.Load.Load(key, out value);
 
             if (staus)
             {
-                string valueFormat = data.Data_.GetFormat(value);
+                string valueFormat = data.GetFormat(value);
 
                 ParseToInt(valueFormat, out valueFinal);
             }

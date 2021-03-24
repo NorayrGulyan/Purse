@@ -2,7 +2,7 @@ using System;
 
 namespace Pures.System
 {
-    internal abstract class PurseData : IPuresData
+    internal abstract class PurseData
     {
         string name;
         protected string Name

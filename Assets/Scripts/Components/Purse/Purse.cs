@@ -5,7 +5,7 @@ using System;
 
 namespace Pures.System
 {
-    internal class Purse : PurseData, IPures
+    internal sealed class Purse : PurseData, IPures
     {
 
         public new string Name { get => base.Name; }
@@ -13,8 +13,6 @@ namespace Pures.System
         public new int Value { get => base.Value; }
 
         public new string Key { get => base.Key; }
-
-        public IPuresData PuresData => this;
 
         /// <summary>
         /// 
